@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>2 - Geocoding</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="https://unpkg.com/tailwindcss@1.0.0-beta.3/dist/tailwind.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+</head>
+<body>
+  <div id="map" class="absolute z-10 top-0 bottom-0 w-full"></div>
+  <div class="absolute z-20 w-full flex justify-center bg-gray">
+    <input type="text" id="street" class="shadow border-2 rounded w-64 py-2 px-3 m-4 text-gray-700 leading-tight" />
+    <button onclick="geocoding()" class="bg-blue-500 hover:bg-blue-700 shadow text-white font-bold py-2 px-4 my-4 rounded focus:outline-none focus:shadow-outline">Go</button>
+  </div>
+  <script>
+    const citylayer = L.tileLayer("./citymap-mercator/{z}/{x}/{y}.png", {
+      tms: true
+    });
+    
+    const map = L.map("map", {
+      center: [47.9957644517, 7.85278691645],
+      zoom: 14,
+      minZoom: 12,
+      maxZoom: 17,
+      layers: [citylayer]
+    });
+    
+    function geocoding() {
+      const street = encodeURIComponent(document.getElementById("street").value);
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&city=Freiburg&street=${street}`)
+      .then(response => response.json())
+      .then(locations => {
+        if (locations.length > 0) {
+          const { lat, lon, display_name } = locations[0]
+          L.marker([lat, lon])
+            .addTo(map)
+            .bindPopup(display_name)
+            .openPopup();
+          map.setView([lat, lon], 17);
+        }
+      })
+    }
+  </script>
+</body>
+</html>

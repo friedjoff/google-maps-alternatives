@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "mbview": "^2.0.1"
+  },
+  "scripts": {
+    "georeferencing": "gdal_translate -of GTiff -a_ullr 7.8295813256 48.0119900765 7.8759939415 47.9795383955 -a_srs EPSG:4269 citymap.jpg citymap-wgs84.tif",
+    "reprojecting": "gdalwarp -of GTiff -t_srs EPSG:3857 citymap-wgs84.tif citymap-mercator.tif",
+    "tiling": "gdal2tiles.py citymap-mercator.tif",
+    "generate-vector-tiles": "tippecanoe --no-feature-limit --no-tile-size-limit --include=genus --include=leaf_type --minimum-zoom=0 --maximum-zoom=g -o trees.mbtiles -g 200 trees-big.json",
+    "serve-vector-tiles": "mbview trees.mbtiles"
+  }
+}

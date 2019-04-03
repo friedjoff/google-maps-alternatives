@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>1 - Raster Tiles</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="https://unpkg.com/tailwindcss@1.0.0-beta.3/dist/tailwind.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+</head>
+<body>
+  <div id="map" class="absolute top-0 bottom-0 w-full"></div>
+  <script>
+    const citylayer = L.tileLayer("./citymap-mercator/{z}/{x}/{y}.png", {
+      tms: true
+    });
+    
+    const map = L.map("map", {
+      center: [47.9957644517, 7.85278691645],
+      zoom: 14,
+      minZoom: 12,
+      maxZoom: 17,
+      layers: [citylayer]
+    });
+  </script>
+</body>
+</html>

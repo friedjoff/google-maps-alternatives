@@ -1,0 +1,4 @@
+/citymap-mercator/
+/node_modules/
+*.mbtiles
+*.tif
