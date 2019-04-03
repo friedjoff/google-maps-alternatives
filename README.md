@@ -2,7 +2,7 @@
 
 Talk and code examples about alternatives to Google Maps.
 
-* Slides
+* [Slides](https://github.com/friedjoff/google-maps-alternatives/raw/master/slides.pdf)
 
 ## Requirements
 
